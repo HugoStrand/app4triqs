@@ -5,21 +5,23 @@
  * Copyright (C) 2018 by The Simons Foundation
  * Author: H. U.R. Strand
  *
- * TRIQS is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
+ * App4Triqs is free software: you can redistribute it and/or modify it under
+ *the terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
  * version.
  *
- * TRIQS is distributed in the hope that it will be useful, but WITHOUT ANY
+ * App4Triqs is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
  *
  * You should have received a copy of the GNU General Public License along with
- * TRIQS. If not, see <http://www.gnu.org/licenses/>.
+ * App4Triqs. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
 
 #pragma once
 
+namespace app4triqs {
 double power_of_two(double a);
+} // namespace app4triqs

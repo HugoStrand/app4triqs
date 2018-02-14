@@ -24,6 +24,6 @@ r"""
 DOC
 
 """
-from app4triqs import power_of_two
+from arithmetic import power_of_two
 
 __all__ = ['power_of_two']

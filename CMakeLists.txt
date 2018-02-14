@@ -39,24 +39,25 @@ option(Documentation "Build documentation" OFF)
 # The std for all targets
 add_compile_options(-std=c++17)
 
-# Common to all targets (ctint, python, tests).
-include_directories(${CMAKE_SOURCE_DIR})
+# Common to all targets (c++, python, tests).
+include_directories(c++/app4triqs)
 
 # To be fixed!!
 triqs_set_rpath_for_all_targets()
 
-add_subdirectory(c++)
+add_subdirectory(c++/app4triqs)
 
 # Tests
 if (${Tests})
  enable_testing()
- add_subdirectory(test)
+ add_subdirectory(test/c++)
+ add_subdirectory(test/python)
 endif()
 
 if (${TRIQS_WITH_PYTHON_SUPPORT})
 
  # Python interface
- add_subdirectory(python)
+ add_subdirectory(python/triqs_app4triqs)
 
  # Build the documentation
  if (${Documentation})
