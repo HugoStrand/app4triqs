@@ -52,6 +52,7 @@ if (${Tests})
  enable_testing()
  add_subdirectory(test/c++)
  add_subdirectory(test/python)
+ add_subdirectory(c++/bench)
 endif()
 
 if (${TRIQS_WITH_PYTHON_SUPPORT})
