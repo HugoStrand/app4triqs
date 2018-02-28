@@ -1,5 +1,7 @@
 set(BENCHMARK_SOURCES
     arithmetic_bench.cpp
+    G2_MM_recomb_bench.cpp
+    G2_MM_recomb_eigen.cpp
     )
 
 add_executable(benchmark_suite ${BENCHMARK_SOURCES})
