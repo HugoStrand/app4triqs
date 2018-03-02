@@ -115,13 +115,40 @@ static void G2_MM_ph_w0_loop_recomb_gf(benchmark::State &state) {
                 g2[0, n1, n2](i, j, k, l) +=
                     s * M1[n1, n1](i, j) * M2[n2, n2](k, l);
 
-    for (auto const &w : mesh_b)
       for (auto const &n1 : mesh_f)
         for (auto const &n2 : mesh_f)
           for (auto const i : range(g2.target_shape()[0]))
             for (auto const j : range(g2.target_shape()[1]))
               for (auto const k : range(g2.target_shape()[2]))
                 for (auto const l : range(g2.target_shape()[3]))
+                  g2[0, n1, n2](i, j, k, l) -=
+                      s * M1[n1, n2](i, l) * M2[n2, n1](k, j);
+  }
+}
+
+static void G2_MM_ph_w0_loop_recomb_gf_rev_loop_order(benchmark::State &state) {
+
+  M_iw_t M1{mesh_ff, {O, O}};
+  M_iw_t M2{mesh_ff, {O, O}};
+  g2_iw_t g2{mesh_bff, {O, O, O, O}};
+
+  for (auto _ : state) {
+
+    for (auto const i : range(g2.target_shape()[0]))
+      for (auto const j : range(g2.target_shape()[1]))
+        for (auto const k : range(g2.target_shape()[2]))
+          for (auto const l : range(g2.target_shape()[3]))
+            for (auto const &n2 : mesh_f)
+              for (auto const &n1 : mesh_f)
+                g2[0, n1, n2](i, j, k, l) +=
+                    s * M1[n1, n1](i, j) * M2[n2, n2](k, l);
+
+      for (auto const i : range(g2.target_shape()[0]))
+        for (auto const j : range(g2.target_shape()[1]))
+          for (auto const k : range(g2.target_shape()[2]))
+            for (auto const l : range(g2.target_shape()[3]))
+              for (auto const &n2 : mesh_f)
+                for (auto const &n1 : mesh_f)
                   g2[0, n1, n2](i, j, k, l) -=
                       s * M1[n1, n2](i, l) * M2[n2, n1](k, j);
   }
@@ -135,13 +162,12 @@ static void G2_MM_ph_w0_loop_recomb_gf_memlayout(benchmark::State &state) {
 
   for (auto _ : state) {
 
-    for (auto const l : range(g2.target_shape()[3]))
       for (auto const k : range(g2.target_shape()[2]))
         for (auto const j : range(g2.target_shape()[1]))
           for (auto const i : range(g2.target_shape()[0]))
             for (auto const l : range(g2.target_shape()[3]))
-                for (auto const &n2 : mesh_f)
-		  for (auto const &n1 : mesh_f)
+              for (auto const &n2 : mesh_f)
+                for (auto const &n1 : mesh_f)
                   g2[0, n1, n2](i, j, k, l) +=
                       s * M1[n1, n1](i, j) * M2[n2, n2](k, l);
 
@@ -149,10 +175,10 @@ static void G2_MM_ph_w0_loop_recomb_gf_memlayout(benchmark::State &state) {
       for (auto const k : range(g2.target_shape()[2]))
         for (auto const j : range(g2.target_shape()[1]))
           for (auto const i : range(g2.target_shape()[0]))
-	    for (auto const &n2 : mesh_f)
-	      for (auto const &n1 : mesh_f)
-		g2[0, n1, n2](i, j, k, l) -=
-		  s * M1[n1, n2](i, l) * M2[n2, n1](k, j);
+            for (auto const &n2 : mesh_f)
+              for (auto const &n1 : mesh_f)
+                g2[0, n1, n2](i, j, k, l) -=
+                    s * M1[n1, n2](i, l) * M2[n2, n1](k, j);
   }
 }
 
@@ -291,6 +317,7 @@ BENCHMARK(G2_MM_ph_full_clef_recomb_gf);
 BENCHMARK(G2_MM_ph_full_loop_recomb_gf);
 
 BENCHMARK(G2_MM_ph_w0_loop_recomb_gf);
+BENCHMARK(G2_MM_ph_w0_loop_recomb_gf_rev_loop_order);
 BENCHMARK(G2_MM_ph_w0_loop_recomb_gf_memlayout);
 BENCHMARK(G2_MM_ph_w0_loop_rearrange_recomb_arr);
 BENCHMARK(G2_MM_ph_w0_loop_rearrange_v2_recomb_arr);
